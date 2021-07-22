@@ -1,9 +1,10 @@
-/* Custom page CSS
--------------------------------------------------- */
-/* Not required for template or sticky footer method. */
-
+/* Move down content because we have a fixed navbar that is 3.5rem tall */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
+body {
+  font-family: 'Montserrat', sans-serif;
+}
 .container {
     width: auto;
-    max-width: 680px;
+    max-width: 1028px;
     padding: 0 15px;
   }

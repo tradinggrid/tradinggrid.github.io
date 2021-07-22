@@ -27,7 +27,6 @@
     <link rel="icon" href="/docs/5.0/assets/img/favicons/favicon.ico">
     <meta name="theme-color" content="#7952b3">
 
-
     <style>
         .bd-placeholder-img {
             font-size: 1.125rem;
@@ -44,79 +43,8 @@
         }
     </style>
 
-
     <!-- Custom styles for this template -->
     <link href="sticky-footer.css" rel="stylesheet">
-
-    <script type="text/javascript">
-        // DOM Mappings
-        let gridValues = document.getElementById('gridValues');
-        let oneGridsProfit = document.getElementById('oneGridsProfit');
-        let calcButton = document.getElementById('calcButton');
-        // text fields
-        let domHighPrice = document.getElementById('domHighPrice');
-        let domLowPrice = document.getElementById('domLowPrice');
-        let domQtyPerGrid = document.getElementById('domQtyPerGrid');
-        let domTradingFee = document.getElementById('domTradingFee');
-        let domGridAmmt = document.getElementById('domGridAmmt');
-        let domPrecision = document.getElementById('domPrecision');
-
-        // leave be
-        let gridsArray = [];
-        let oneTradeFee;
-
-        // set these variables
-        let highPrice;
-        let lowPrice;
-        let quantity;
-        let fee;
-        let gridsAmmt;
-        let precision;
-
-        // get the prices at which grids will occur and push them into the array gridsArray
-        const findGridPrices = (highPrice, lowPrice, gridsAmmt, precision) => {
-            let gridPrice = (highPrice - lowPrice) / gridsAmmt;
-            let gridStep = parseFloat(lowPrice);
-            for (i = 0; i < gridsAmmt; i++) {
-                gridStep += gridPrice;
-                gridsArray.push(gridStep.toFixed(precision));
-            }
-        };
-
-        // figure out the fee for one side of the trade
-        const findTradeFee = (fee, quantity, price) => {
-            feeTotal = (quantity * price) * (fee / 100);
-            oneTradeFee = feeTotal.toFixed(precision);
-        };
-
-        calcButton.addEventListener('click', function () {
-
-            // clear the results area before displaying results for multiple calcs w/o reload
-            gridValues.innerText = '';
-            oneGridsProfit.innerText = '';
-            gridsArray = [];
-
-            highPrice = domHighPrice.value;
-            lowPrice = domLowPrice.value;
-            quantity = domQtyPerGrid.value;
-            fee = domTradingFee.value;
-            gridsAmmt = domGridAmmt.value;
-            precision = domPrecision.value;
-
-            findGridPrices(highPrice, lowPrice, gridsAmmt, precision);
-            findTradeFee(fee, quantity, gridsArray[0]);
-
-            let oneGridProfit = (gridsArray[1] - gridsArray[0]) * quantity - oneTradeFee;
-
-            gridsArray.forEach(function (aGrid) {
-                const newArrayItem = document.createElement('li');
-                newArrayItem.innerHTML = aGrid;
-                gridValues.appendChild(newArrayItem);
-            });
-
-            oneGridsProfit.innerText = parseFloat(oneGridProfit.toFixed(precision));
-        });
-    </script>
 </head>
 
 <body class="d-flex flex-column h-100">
@@ -129,22 +57,59 @@
                 por grade.</p>
             <p>Acessar <a href="https://t.me/BotcoinTradingBot">Bot no Telegram</a> para usar a grid calculada.</p>
 
-            <h3>Fill in the fields of your grid trade</h3>
-            <input type="number" id="domHighPrice" value="" placeholder="High Price"> <br><br>
-            <input type="number" id="domLowPrice" value="" placeholder="Low Price"> <br><br>
-            <input type="number" id="domQtyPerGrid" value="" placeholder="Per Grid Qty"> <br><br>
-            <input type="number" id="domTradingFee" value="" placeholder="Trading Fee in Decimal"> <br><br>
-            <input type="number" id="domGridAmmt" value="" placeholder="Ammt of Grids"> <br><br>
-            <input type="number" id="domPrecision" value="" placeholder="Precision"> <br><br>
+            <div class="row">
+                <div class="col-md-6">
+                    <h3>Montagem da Grid</h3>
+                    <hr>
+                    <form>
+                        <div class="form-group">
+                            <label for="domHighPrice">Preço Mais Alto</label>
+                            <input type="number" id="domHighPrice" value="2.5" placeholder="High Price"
+                                class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="domLowPrice">Preço Mais Baixo</label>
+                            <input type="number" id="domLowPrice" value="1" placeholder="Low Price"
+                                class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="domQtyPerGrid">Quantidade de Crypto Por Grid</label>
+                            <input type="number" id="domQtyPerGrid" value="1" placeholder="Per Grid Qty"
+                                class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="domTradingFee">Taxa de Trading</label>
+                            <input type="number" id="domTradingFee" value="0.0075" placeholder="Fee Percent eg 0.075"
+                                class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="domGridAmmt">Quantidade de Grids</label>
+                            <input type="number" id="domGridAmmt" value="10" placeholder="Ammt of Grids"
+                                class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="domPrecision">Precisão de Casas Decimais</label>
+                            <input type="number" id="domPrecision" value="4" placeholder="Precision"
+                                class="form-control">
+                        </div>
+                        <hr>
+                        <div class="form-group">
+                            <span onclick="add()" id="calcButton" class="btn btn-primary">Calcular</span>
+                        </div>
+                    </form>
+                </div>
 
-            <button id="calcButton">Calculate It</button>
+                <div class="col-md-6">
+                    <h3>Lucro por Grid</h3>
+                    <hr>
+                    <input type="number" id="oneGridsProfit" class="form-control" disabled></p>
 
-            <h2>Grid Trade Info</h2>
-            <h3>Grid Prices</h3>
-            <p id="gridValues"></p>
-            <br>
-            <h3>Per Grid Profit</h3>
-            <p id="oneGridsProfit"></p>
+                    <h3>Preços de Cada Grid</h3>
+                    <hr>
+                    <ul id="myUL" class="list-group">
+                    </ul>
+                </div>
+            </div>
         </div>
     </main>
 
@@ -154,6 +119,8 @@
         </div>
     </footer>
 
+
+    <script src="grid-calculate.js"></script>
 </body>
 
 </html>
