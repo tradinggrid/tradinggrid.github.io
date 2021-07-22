@@ -125,9 +125,26 @@
     <main class="flex-shrink-0">
         <div class="container">
             <h1 class="mt-5">Trading In Grid - BotCoin</h1>
-            <p class="lead">Calculadora de <b>Grid Trading</b> para descobrir onde as grades serão colocadas e o lucro
+            <p class="lead">Calculadora de <b>Grid Trading</b> para descobrir onde as grades serão alocadas e o lucro
                 por grade.</p>
             <p>Acessar <a href="https://t.me/BotcoinTradingBot">Bot no Telegram</a> para usar a grid calculada.</p>
+
+            <h3>Fill in the fields of your grid trade</h3>
+            <input type="number" id="domHighPrice" value="" placeholder="High Price"> <br><br>
+            <input type="number" id="domLowPrice" value="" placeholder="Low Price"> <br><br>
+            <input type="number" id="domQtyPerGrid" value="" placeholder="Per Grid Qty"> <br><br>
+            <input type="number" id="domTradingFee" value="" placeholder="Trading Fee in Decimal"> <br><br>
+            <input type="number" id="domGridAmmt" value="" placeholder="Ammt of Grids"> <br><br>
+            <input type="number" id="domPrecision" value="" placeholder="Precision"> <br><br>
+
+            <button id="calcButton">Calculate It</button>
+
+            <h2>Grid Trade Info</h2>
+            <h3>Grid Prices</h3>
+            <p id="gridValues"></p>
+            <br>
+            <h3>Per Grid Profit</h3>
+            <p id="oneGridsProfit"></p>
         </div>
     </main>
 
