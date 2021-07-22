@@ -47,6 +47,76 @@
 
     <!-- Custom styles for this template -->
     <link href="sticky-footer.css" rel="stylesheet">
+
+    <script type="text/javascript">
+        // DOM Mappings
+        let gridValues = document.getElementById('gridValues');
+        let oneGridsProfit = document.getElementById('oneGridsProfit');
+        let calcButton = document.getElementById('calcButton');
+        // text fields
+        let domHighPrice = document.getElementById('domHighPrice');
+        let domLowPrice = document.getElementById('domLowPrice');
+        let domQtyPerGrid = document.getElementById('domQtyPerGrid');
+        let domTradingFee = document.getElementById('domTradingFee');
+        let domGridAmmt = document.getElementById('domGridAmmt');
+        let domPrecision = document.getElementById('domPrecision');
+
+        // leave be
+        let gridsArray = [];
+        let oneTradeFee;
+
+        // set these variables
+        let highPrice;
+        let lowPrice;
+        let quantity;
+        let fee;
+        let gridsAmmt;
+        let precision;
+
+        // get the prices at which grids will occur and push them into the array gridsArray
+        const findGridPrices = (highPrice, lowPrice, gridsAmmt, precision) => {
+            let gridPrice = (highPrice - lowPrice) / gridsAmmt;
+            let gridStep = parseFloat(lowPrice);
+            for (i = 0; i < gridsAmmt; i++) {
+                gridStep += gridPrice;
+                gridsArray.push(gridStep.toFixed(precision));
+            }
+        };
+
+        // figure out the fee for one side of the trade
+        const findTradeFee = (fee, quantity, price) => {
+            feeTotal = (quantity * price) * (fee / 100);
+            oneTradeFee = feeTotal.toFixed(precision);
+        };
+
+        calcButton.addEventListener('click', function () {
+
+            // clear the results area before displaying results for multiple calcs w/o reload
+            gridValues.innerText = '';
+            oneGridsProfit.innerText = '';
+            gridsArray = [];
+
+            highPrice = domHighPrice.value;
+            lowPrice = domLowPrice.value;
+            quantity = domQtyPerGrid.value;
+            fee = domTradingFee.value;
+            gridsAmmt = domGridAmmt.value;
+            precision = domPrecision.value;
+
+            findGridPrices(highPrice, lowPrice, gridsAmmt, precision);
+            findTradeFee(fee, quantity, gridsArray[0]);
+
+            let oneGridProfit = (gridsArray[1] - gridsArray[0]) * quantity - oneTradeFee;
+
+            gridsArray.forEach(function (aGrid) {
+                const newArrayItem = document.createElement('li');
+                newArrayItem.innerHTML = aGrid;
+                gridValues.appendChild(newArrayItem);
+            });
+
+            oneGridsProfit.innerText = parseFloat(oneGridProfit.toFixed(precision));
+        });
+    </script>
 </head>
 
 <body class="d-flex flex-column h-100">
@@ -57,13 +127,7 @@
             <h1 class="mt-5">Trading In Grid - BotCoin</h1>
             <p class="lead">Calculadora de <b>Grid Trading</b> para descobrir onde as grades serão colocadas e o lucro
                 por grade.</p>
-
-            <div class="col-md-12">
-                <h5 class="pb-2 mb-2 border-bottom">BOTCOIN - BOT PARA GRID TRADING AUTOMÁTICO</h5>
-                <p><i class="fab fa-telegram"></i>&nbsp;
-                    <a href="https://t.me/BotcoinTradingBot" target="_blank">Acessar Bot no Telegram</a>
-                </p>
-            </div>
+            <p>Acessar <a href="https://t.me/BotcoinTradingBot">Bot no Telegram</a> para usar a grid calculada.</p>
         </div>
     </main>
 
@@ -72,8 +136,6 @@
             <span class="text-muted">&#xA9; 2015/2021 - Desenvolvido por Jeferson Cruz | BLACKFISH LABS</span>
         </div>
     </footer>
-
-
 
 </body>
 
