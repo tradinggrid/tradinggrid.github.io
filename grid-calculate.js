@@ -42,6 +42,7 @@ function add() {
     // clear the results area before displaying results for multiple calcs w/o reload
     oneGridsProfit.innerText = '';
     gridsArray = [];
+    gridValues.innerHTML = '';
 
     highPrice = domHighPrice.value;
     lowPrice = domLowPrice.value;
@@ -55,9 +56,7 @@ function add() {
 
     let oneGridProfit = (gridsArray[1] - gridsArray[0]) * quantity - oneTradeFee;
 
-    gridsArray.forEach(function (aGrid) {
-        newElement(aGrid);
-    });
+    gridsArray.forEach(aGrid => newElement(aGrid));
 
     oneGridsProfit.value = parseFloat(oneGridProfit).toFixed(precision);
 }
@@ -73,6 +72,6 @@ function newElement(value) {
     if (inputValue === '') {
         alert("You must write something!");
     } else {
-        document.getElementById("myUL").appendChild(li);
+        gridValues.appendChild(li);
     }
 }
