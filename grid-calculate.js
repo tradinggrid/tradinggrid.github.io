@@ -73,7 +73,7 @@ function add() {
     let percentFree = ((price - lowPrice) * totalPercentage) / (priceDiff);
 
     let oneGridProfit = (gridsArray[1] - gridsArray[0]) * quantity - oneTradeFee;
-    let oneGridDiff = (gridsArray[1] - gridsArray[0]) * quantity;
+    let oneGridDiff = (gridsArray[1] - gridsArray[0]);
     let oneGridBuy = ((quantity * price) * gridsAmmt) * (percentBuy / totalPercentage);
     let oneGridFree = ((quantity * price) * gridsAmmt) * (percentFree / totalPercentage);
 
