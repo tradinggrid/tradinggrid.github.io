@@ -7,4 +7,9 @@ body {
     width: auto;
     max-width: 1028px;
     padding: 0 15px;
-  }
+}
+
+.grid-list {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+}

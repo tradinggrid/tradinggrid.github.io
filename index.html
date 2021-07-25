@@ -53,64 +53,103 @@
     <main class="flex-shrink-0">
         <div class="container">
             <h1 class="mt-5">Trading In Grid - BotCoin</h1>
-            <p class="lead">Calculadora de <b>Grid Trading</b> para descobrir onde as grades serão alocadas e o lucro
-                por grade.</p>
-            <p>Acessar <a href="https://t.me/BotcoinTradingBot" target="_blank">Bot no Telegram</a> para usar a grid calculada.</p>
+            <p class="lead">Calculadora de <b>Grid Trading</b> para descobrir onde as grids serão alocadas e o lucro
+                por grid.</p>
+            <p>Para ativar um bot de trading automático na grid calculada, acesse o <a
+                    href="https://t.me/BotcoinTradingBot" target="_blank">BotCoin no Telegram</a>, conecte sua exchange
+                e aplique a configuração em um novo
+                bot.</p>
 
             <div class="row">
                 <div class="col-md-6">
                     <h3>Montagem da Grid</h3>
                     <hr>
                     <form>
-                        <div class="form-group">
-                            <label for="domHighPrice">Preço Mais Alto</label>
-                            <input type="number" id="domHighPrice" value="2.5" placeholder="High Price"
-                                class="form-control">
+                        <div class="row">
+                            <div class="form-group col-md-6">
+                                <label for="domLowPrice">($) Preço Mais Baixo</label>
+                                <input type="number" id="domLowPrice" value="0.5" placeholder="Low Price"
+                                    class="form-control">
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="domHighPrice">($) Preço Mais Alto</label>
+                                <input type="number" id="domHighPrice" value="2.5" placeholder="High Price"
+                                    class="form-control">
+                            </div>
                         </div>
                         <div class="form-group">
-                            <label for="domLowPrice">Preço Mais Baixo</label>
-                            <input type="number" id="domLowPrice" value="1" placeholder="Low Price"
-                                class="form-control">
+                            <label for="domPrice">($) Preço Atual da Cripto</label>
+                            <input type="number" id="domPrice" value="1.5" placeholder="Preço" class="form-control">
                         </div>
-                        <div class="form-group">
-                            <label for="domQtyPerGrid">Quantidade de Crypto Por Grid</label>
-                            <input type="number" id="domQtyPerGrid" value="1" placeholder="Per Grid Qty"
-                                class="form-control">
+                        <div class="row">
+                            <div class="form-group col-md-6">
+                                <label for="domGridAmmt">Qnt de Grids</label>
+                                <input type="number" id="domGridAmmt" value="10" placeholder="Ammt of Grids"
+                                    class="form-control">
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="domQtyPerGrid">Qnt de Cripto Por Grid</label>
+                                <input type="number" id="domQtyPerGrid" value="1" placeholder="Per Grid Qty"
+                                    class="form-control">
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label for="domTradingFee">Taxa de Trading</label>
-                            <input type="number" id="domTradingFee" value="0.0075" placeholder="Fee Percent eg 0.075"
-                                class="form-control">
-                        </div>
-                        <div class="form-group">
-                            <label for="domGridAmmt">Quantidade de Grids</label>
-                            <input type="number" id="domGridAmmt" value="10" placeholder="Ammt of Grids"
-                                class="form-control">
-                        </div>
-                        <div class="form-group">
-                            <label for="domPrecision">Precisão de Casas Decimais</label>
-                            <input type="number" id="domPrecision" value="4" placeholder="Precision"
-                                class="form-control">
+                        <div class="row">
+                            <div class="form-group col-md-6">
+                                <label for="domTradingFee">($) Taxa de Trading</label>
+                                <input type="number" id="domTradingFee" value="0.0075"
+                                    placeholder="Fee Percent eg 0.075" class="form-control">
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="domPrecision">Precisão de Casas Decimais</label>
+                                <input type="number" id="domPrecision" value="4" placeholder="Precision"
+                                    class="form-control" disabled>
+                            </div>
                         </div>
                         <hr>
                         <div class="form-group">
                             <span onclick="add()" id="calcButton" class="btn btn-primary">Calcular</span>
                         </div>
+                        <hr>
                     </form>
                 </div>
 
                 <div class="col-md-6">
-                    <h3>Lucro por Grid</h3>
+                    <h3>Resultados</h3>
                     <hr>
-                    <div class="form-group">
-                        <label for="oneGridsProfit"></label>
-                        <input type="number" id="oneGridsProfit" class="form-control" disabled>
-                    </div>
- 
-                    <h3>Preços de Cada Grid</h3>
+                    <form>
+                        <div class="form-group">
+                            <label for="oneGridsDiff">($) Diferença entre Grids</label>
+                            <input type="number" id="oneGridsDiff" class="form-control" disabled>
+                        </div>
+
+                        <div class="row">
+                            <div class="form-group col-md-6">
+                                <label for="oneGridsBuy">($) Comprado</label>
+                                <input type="number" id="oneGridsBuy" class="form-control" disabled>
+                            </div>
+
+                            <div class="form-group col-md-6">
+                                <label for="oneGridsPercBuy">(%) Comprado</label>
+                                <input type="number" id="oneGridsPercBuy" class="form-control" disabled>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="oneGridsFree">($) Caixa</label>
+                                <input type="number" id="oneGridsFree" class="form-control" disabled>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="oneGridsPercFree">(%) Caixa</label>
+                                <input type="number" id="oneGridsPercFree" class="form-control" disabled>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="oneGridsProfit">($) Lucro por Grid</label>
+                            <input type="number" id="oneGridsProfit" class="form-control" disabled>
+                        </div>
+                    </form>
+
                     <hr>
-                    <ul id="gridValues" class="list-group">
-                    </ul>
+                    <ul id="gridValues" class="grid-list list-group"></ul>
+                    <br>
                 </div>
             </div>
         </div>
@@ -118,7 +157,9 @@
 
     <footer class="footer mt-auto py-3 bg-light">
         <div class="container">
-            <span class="text-muted">&#xA9; 2015/2021 - Desenvolvido por Jeferson Cruz | BLACKFISH LABS</span>
+            <span class="text-muted">&#xA9; 2015/2021 - <a target="_blank"
+                    href="https://blackfishlabs.com.br/">BLACKFISH
+                    LABS</a></span>
         </div>
     </footer>
 
