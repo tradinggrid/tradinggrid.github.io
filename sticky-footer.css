@@ -1,7 +1,7 @@
 /* Move down content because we have a fixed navbar that is 3.5rem tall */
-@import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Encode+Sans+SC&display=swap');
 body {
-  font-family: 'Montserrat', sans-serif;
+  font-family: 'Encode Sans SC', sans-serif;
 }
 .container {
     width: auto;
