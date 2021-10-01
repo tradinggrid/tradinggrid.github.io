@@ -19,6 +19,10 @@
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"></script>
 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
     <!-- Favicons -->
     <link rel="apple-touch-icon" href="/docs/5.0/assets/img/favicons/apple-touch-icon.png" sizes="180x180">
     <link rel="icon" href="/docs/5.0/assets/img/favicons/favicon-32x32.png" sizes="32x32" type="image/png">
@@ -57,96 +61,197 @@
             <p class="lead">Calculadora de <b>Grid Trading</b> para descobrir onde as grids serão alocadas e o lucro
                 por grid.</p>
 
-            <div class="row">
-                <div class="col-md-6">
-                    <h3>Montagem da Grid</h3>
-                    <hr>
-                    <form>
-                        <div class="row">
-                            <div class="form-group col-md-6">
-                                <label for="domLowPrice">($) Preço Mais Baixo</label>
-                                <input type="number" id="domLowPrice" value="0.5" placeholder="Low Price"
-                                    class="form-control">
-                            </div>
-                            <div class="form-group col-md-6">
-                                <label for="domHighPrice">($) Preço Mais Alto</label>
-                                <input type="number" id="domHighPrice" value="2.5" placeholder="High Price"
-                                    class="form-control">
-                            </div>
+            <!-- Nav tabs -->
+            <ul class="nav nav-tabs" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" data-toggle="tab" href="#home">Grid Fixa</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#menu1">Grid Dinâmica</a>
+                </li>
+            </ul>
+
+            <!-- Tab panes -->
+            <div class="tab-content">
+                <div id="home" class="container tab-pane active"><br>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h3>Montagem da Grid</h3>
+                            <hr>
+                            <form>
+                                <div class="row">
+                                    <div class="form-group col-md-6">
+                                        <label for="domLowPrice">($) Preço Mais Baixo</label>
+                                        <input type="number" id="domLowPrice" value="0.5" placeholder="Low Price"
+                                            class="form-control">
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="domHighPrice">($) Preço Mais Alto</label>
+                                        <input type="number" id="domHighPrice" value="2.5" placeholder="High Price"
+                                            class="form-control">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="domPrice">($) Preço Atual da Cripto</label>
+                                    <input type="number" id="domPrice" value="1.5" placeholder="Preço"
+                                        class="form-control">
+                                </div>
+                                <div class="row">
+                                    <div class="form-group col-md-6">
+                                        <label for="domGridAmmt">Qnt de Grids</label>
+                                        <input type="number" id="domGridAmmt" value="10" placeholder="Ammt of Grids"
+                                            class="form-control">
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="domQtyPerGrid">Qnt de Cripto Por Grid</label>
+                                        <input type="number" id="domQtyPerGrid" value="1" placeholder="Per Grid Qty"
+                                            class="form-control">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group col-md-6">
+                                        <label for="domTradingFee">($) Taxa de Trading</label>
+                                        <input type="number" id="domTradingFee" value="0.0075"
+                                            placeholder="Fee Percent eg 0.075" class="form-control">
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="domPrecision">Precisão de Casas Decimais</label>
+                                        <input type="number" id="domPrecision" value="4" placeholder="Precision"
+                                            class="form-control" disabled>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="form-group">
+                                    <span onclick="add()" id="calcButton" class="btn btn-primary">Calcular</span>
+                                </div>
+                            </form>
                         </div>
-                        <div class="form-group">
-                            <label for="domPrice">($) Preço Atual da Cripto</label>
-                            <input type="number" id="domPrice" value="1.5" placeholder="Preço" class="form-control">
+
+                        <div class="col-md-6">
+                            <h3>Resultados</h3>
+                            <hr>
+                            <form>
+                                <div class="form-group">
+                                    <label for="oneGridsDiff">($) Diferença entre Grids</label>
+                                    <input type="number" id="oneGridsDiff" class="form-control" disabled>
+                                </div>
+
+                                <div class="row">
+                                    <div class="form-group col-md-6">
+                                        <label for="oneGridsBuy">($) Comprado</label>
+                                        <input type="number" id="oneGridsBuy" class="form-control" disabled>
+                                    </div>
+
+                                    <div class="form-group col-md-6">
+                                        <label for="oneGridsPercBuy">(%) Comprado</label>
+                                        <input type="number" id="oneGridsPercBuy" class="form-control" disabled>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="oneGridsFree">($) Caixa</label>
+                                        <input type="number" id="oneGridsFree" class="form-control" disabled>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="oneGridsPercFree">(%) Caixa</label>
+                                        <input type="number" id="oneGridsPercFree" class="form-control" disabled>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="oneGridsProfit">($) Lucro por Grid</label>
+                                    <input type="number" id="oneGridsProfit" class="form-control" disabled>
+                                </div>
+                            </form>
+                            <hr>
                         </div>
-                        <div class="row">
-                            <div class="form-group col-md-6">
-                                <label for="domGridAmmt">Qnt de Grids</label>
-                                <input type="number" id="domGridAmmt" value="10" placeholder="Ammt of Grids"
-                                    class="form-control">
-                            </div>
-                            <div class="form-group col-md-6">
-                                <label for="domQtyPerGrid">Qnt de Cripto Por Grid</label>
-                                <input type="number" id="domQtyPerGrid" value="1" placeholder="Per Grid Qty"
-                                    class="form-control">
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="form-group col-md-6">
-                                <label for="domTradingFee">($) Taxa de Trading</label>
-                                <input type="number" id="domTradingFee" value="0.0075"
-                                    placeholder="Fee Percent eg 0.075" class="form-control">
-                            </div>
-                            <div class="form-group col-md-6">
-                                <label for="domPrecision">Precisão de Casas Decimais</label>
-                                <input type="number" id="domPrecision" value="4" placeholder="Precision"
-                                    class="form-control" disabled>
-                            </div>
-                        </div>
-                        <hr>
-                        <div class="form-group">
-                            <span onclick="add()" id="calcButton" class="btn btn-primary">Calcular</span>
-                        </div>
-                    </form>
+                    </div>
                 </div>
 
-                <div class="col-md-6">
-                    <h3>Resultados</h3>
-                    <hr>
-                    <form>
-                        <div class="form-group">
-                            <label for="oneGridsDiff">($) Diferença entre Grids</label>
-                            <input type="number" id="oneGridsDiff" class="form-control" disabled>
+                <!-- DYNAMIC GRID -->
+                <div id="menu1" class="container tab-pane fade"><br>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h3>Montagem da Grid</h3>
+                            <hr>
+                            <form>
+                                <div class="row">
+                                    <div class="form-group col-md-6">
+                                        <label for="domDynamicPrice">($) Preço Atual da Cripto</label>
+                                        <input type="number" id="domDynamicPrice" value="1.5" placeholder="Preço"
+                                            class="form-control">
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="domIntervalProf">($) Diferença entre Grids</label>
+                                        <input type="number" id="domIntervalProf" value="0.1" placeholder="Preço"
+                                            class="form-control">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group col-md-6">
+                                        <label for="domDynamicGridAmmt">Qnt de Grids (auto 2x)</label>
+                                        <input type="number" id="domDynamicGridAmmt" value="3"
+                                            placeholder="Ammt of Grids" class="form-control">
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="domDynamicQtyPerGrid">Qnt de Cripto Por Grid</label>
+                                        <input type="number" id="domDynamicQtyPerGrid" value="1"
+                                            placeholder="Per Grid Qty" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group col-md-6">
+                                        <label for="domDynamicTradingFee">($) Taxa de Trading</label>
+                                        <input type="number" id="domDynamicTradingFee" value="0.0075"
+                                            placeholder="Fee Percent eg 0.075" class="form-control">
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="domDynamicPrecision">Precisão de Casas Decimais</label>
+                                        <input type="number" id="domDynamicPrecision" value="4" placeholder="Precision"
+                                            class="form-control" disabled>
+                                    </div>
+                                </div>
+
+                                <hr>
+                                <div class="form-group">
+                                    <span onclick="addDynamic()" id="calcButton" class="btn btn-primary">Calcular</span>
+                                </div>
+                            </form>
                         </div>
 
-                        <div class="row">
-                            <div class="form-group col-md-6">
-                                <label for="oneGridsBuy">($) Comprado</label>
-                                <input type="number" id="oneGridsBuy" class="form-control" disabled>
-                            </div>
+                        <div class="col-md-6">
+                            <h3>Resultados</h3>
+                            <hr>
+                            <form>
+                                <div class="row">
+                                    <div class="form-group col-md-6">
+                                        <label for="oneDynamicGridsBuy">($) Comprado</label>
+                                        <input type="number" id="oneDynamicGridsBuy" class="form-control" disabled>
+                                    </div>
 
-                            <div class="form-group col-md-6">
-                                <label for="oneGridsPercBuy">(%) Comprado</label>
-                                <input type="number" id="oneGridsPercBuy" class="form-control" disabled>
-                            </div>
-                            <div class="form-group col-md-6">
-                                <label for="oneGridsFree">($) Caixa</label>
-                                <input type="number" id="oneGridsFree" class="form-control" disabled>
-                            </div>
-                            <div class="form-group col-md-6">
-                                <label for="oneGridsPercFree">(%) Caixa</label>
-                                <input type="number" id="oneGridsPercFree" class="form-control" disabled>
-                            </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="oneDynamicGridsPercBuy">(%) Comprado</label>
+                                        <input type="number" id="oneDynamicGridsPercBuy" class="form-control" disabled>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="oneDynamicGridsFree">($) Caixa</label>
+                                        <input type="number" id="oneDynamicGridsFree" class="form-control" disabled>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="oneDynamicGridsPercFree">(%) Caixa</label>
+                                        <input type="number" id="oneDynamicGridsPercFree" class="form-control" disabled>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="oneDynamicGridsProfit">($) Lucro por Grid</label>
+                                    <input type="number" id="oneDynamicGridsProfit" class="form-control" disabled>
+                                </div>
+                            </form>
+                            <hr>
                         </div>
-                        <div class="form-group">
-                            <label for="oneGridsProfit">($) Lucro por Grid</label>
-                            <input type="number" id="oneGridsProfit" class="form-control" disabled>
-                        </div>
-                    </form>
-                    <hr>
+                    </div>
                 </div>
             </div>
 
-            <hr>
+            <!-- RESULT -->
+            <br>
             <ul id="gridValues" class="grid-list list-group"></ul>
         </div>
     </main>
